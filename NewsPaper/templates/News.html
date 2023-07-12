@@ -13,7 +13,15 @@ news
     <h1>Все новости</h1>
     <h3>{% current_time '%b %d %Y' %}</h3>
     <h3> {{ next_sale|default_if_none:"Скоро будут новые новости" }} </h3>
+
+    <form action="" method="get">
+        {{ filterset.form.as_p }}
+        <input type="submit" value="Найти" />
+
+    </form>
+
     <hr>
+
     {% if news %}
         <table>
             <tr>
@@ -33,13 +41,33 @@ news
             {% for new in news %}
             <tr>
                 <td>{{ new.title | truncatewords:2 }}</td>
-                <td>{{ new.text | truncatechars:20, censor }}</td>
+                <td>{{ new.text | truncatechars:100 | censor }}</td>
                 <td>{{ new.rating }}</td>
                 <td>{{ new.author }}</td>
+                <td>{{ new.added_at }}</td>
             </tr>
             {% endfor %}
        </table>
    {% else %}
         <h2>Новостей нет!</h2>
    {% endif %}
+
+   {% if page_obj.has_previous %}
+       <a href="?page=1">1</a>
+       {% if page_obj.previous_page_number != 1 %}
+           ...
+           <a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+       {% endif %}
+   {% endif %}
+
+   {{ page_obj.number }}
+
+   {% if page_obj.has_next %}
+       <a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+       {% if paginator.num_pages != page_obj.next_page_number %}
+           ...
+           <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+       {% endif %}
+   {% endif %}
+
 {% endblock content %}

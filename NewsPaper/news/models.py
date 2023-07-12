@@ -36,6 +36,9 @@ class Post(models.Model):
     title = models.CharField(max_length=128)
     text = models.TextField()
     rating = models.SmallIntegerField(default=0)
+    added_at = models.DateTimeField(
+        auto_now=True,
+    )
 
     def like(self):
         self.rating += 1
