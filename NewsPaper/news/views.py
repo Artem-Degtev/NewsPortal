@@ -50,20 +50,21 @@ def multiply(request):
    return HttpResponse(html)
 
 
-class PostCreate(LoginRequiredMixin, CreateView):
+class PostCreate(PermissionRequiredMixin, CreateView):
+    permission_required = ('news.add_post',)
     form_class = PostForm
     model = Post
     template_name = 'post_edit.html'
 
 
 class PostUpdate(PermissionRequiredMixin, UpdateView):
-    permission_required = ('NewsPaper.change_product',)
+    permission_required = ('news.change_post',)
     form_class = PostForm
     model = Post
     template_name = 'post_edit.html'
 
 class PostDelete(PermissionRequiredMixin, DeleteView):
-    permission_required = ('NewsPaper.delete_product',)
+    permission_required = ('news.delete_post',)
     model = Post
     template_name = 'post_delete.html'
     success_url = reverse_lazy('post_list')

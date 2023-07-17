@@ -12,7 +12,6 @@ class PostForm(forms.ModelForm):
             'text',
             'postCategory',
             'rating',
-            'dataCreation',
             'categoryType'
         ]
 

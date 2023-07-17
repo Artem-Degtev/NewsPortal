@@ -1,6 +1,7 @@
 from django import template
 
 
+
 register = template.Library()
 
 FORBIDDEN_WORDS = {
@@ -13,3 +14,4 @@ def censor(value, bw='Дурак'):
 
    cens = FORBIDDEN_WORDS[bw]
    return f'{value}{cens}'
+
