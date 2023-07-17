@@ -1,12 +1,15 @@
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from datetime import datetime
-
-from django.views.generic import ListView, DetailView
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Post
 from django.http import HttpResponse
 from .filters import PostFilter
+from .forms import PostForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class NewsList(ListView):
+class PostList(ListView):
     model = Post
     ordering = 'title'
     # queryset = Product.objects.filter(
@@ -29,7 +32,7 @@ class NewsList(ListView):
 
 
 
-class NewsDetail(DetailView):
+class PostDetail(DetailView):
     model = Post
     template_name = 'new.html'
     context_object_name = 'new'
@@ -45,3 +48,22 @@ def multiply(request):
        html = f"<html><body>Invalid input.</body></html>"
 
    return HttpResponse(html)
+
+
+class PostCreate(LoginRequiredMixin, CreateView):
+    form_class = PostForm
+    model = Post
+    template_name = 'post_edit.html'
+
+
+class PostUpdate(PermissionRequiredMixin, UpdateView):
+    permission_required = ('NewsPaper.change_product',)
+    form_class = PostForm
+    model = Post
+    template_name = 'post_edit.html'
+
+class PostDelete(PermissionRequiredMixin, DeleteView):
+    permission_required = ('NewsPaper.delete_product',)
+    model = Post
+    template_name = 'post_delete.html'
+    success_url = reverse_lazy('post_list')
