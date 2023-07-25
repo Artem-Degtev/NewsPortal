@@ -10,8 +10,11 @@ FORBIDDEN_WORDS = {
 }
 
 @register.filter()
-def censor(value, bw='Дурак'):
+def censor(text):
+   text_list = text.split()
+   for word in text_list:
+      if word in FORBIDDEN_WORDS:
+         text = text.replace(word, word[0] + (len(word) - 1)*'*')
+   return text
 
-   cens = FORBIDDEN_WORDS[bw]
-   return f'{value}{cens}'
 

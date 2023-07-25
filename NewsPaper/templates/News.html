@@ -54,7 +54,7 @@ news
             {% for new in news %}
             <tr>
                 <td>{{ new.title | truncatewords:2 }}</td>
-                <td>{{ new.text | truncatechars:100 }}</td>
+                <td>{{ new.text | truncatechars:100 | censor }}</td>
                 <td>{{ new.rating }}</td>
                 <td>{{ new.author }}</td>
                 <td>{{ new.added_at }}</td>
