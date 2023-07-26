@@ -54,7 +54,7 @@ class Post(models.Model):
         return f'{self.title.title()}: {self.text[:20]}'
 
     def get_absolute_url(self):
-        return reverse('product_detail', args=[str(self.id)])
+        return reverse('post_detail', args=[str(self.id)])
 
 # class PostCategory(models.Model):
 #     postTrhough = models.ForeignKey(Post, on_delete=models.CASCADE)

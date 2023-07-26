@@ -12,6 +12,7 @@ class PostForm(forms.ModelForm):
             'text',
             'rating',
             'categoryType',
+            'postCategory',
             'author'
         ]
 
