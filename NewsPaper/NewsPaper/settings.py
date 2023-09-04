@@ -177,3 +177,65 @@ CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'console': {
+            'format': '%(asctime)s %(levelname)s %(message)s',
+            'datefmt': "%d/%m/%Y %H:%M:%S"
+        },
+        'console_warning': {
+            'format': '%(asctime)s %(levelname)s %(message)s' '%(pathname)s',
+            'datefmt': "%d/%m/%Y %H:%M:%S"
+        },
+        'console_error': {
+            'format': '%(asctime)s %(levelname)s %(message)s' '%(pathname)s' '%(exc_info)s',
+            'datefmt': "%d/%m/%Y %H:%M:%S"
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'console',
+        },
+        'INFO': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': 'general.log',
+            'formatter': 'console',
+        },
+        'ERROR': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': 'errors.log',
+            'formatter': 'console_error',
+        },
+        'CRIT': {
+            'level': 'CRITICAL',
+            'class': 'logging.FileHandler',
+            'filename': 'errors.log',
+            'formatter': 'console_error',
+        },
+        'SECUR': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'security.log',
+            'formatter': 'console',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        },
+        'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propogate': False,
+        },
+    },
+}

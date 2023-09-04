@@ -13,6 +13,19 @@ from django.db.models import Exists, OuterRef
 from django.views.decorators.csrf import csrf_protect
 from .models import Subscription, Category
 from django.shortcuts import redirect, get_object_or_404
+import logging
+
+logger = logging.getLogger(__name__)
+
+def index(request):
+    logger.info('INFO')
+    news = New.objects.all()
+    return render(request, 'index.html', context={'news': news})
+
+def detail (request, slug):
+    news = New.objects.all()
+    new = New.objects.get(slug__iexact=slug)
+    return render(request, 'details.html', context={'new': new, 'news': news})
 
 
 class PostList(ListView):
